@@ -22,14 +22,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*
 test 01:
-blk        pl     hands      wins blackjack  charlies     loses     busts dealerbjs    pushes
+tid        pl     hands      wins blackjack  charlies     loses     busts dealerbjs    pushes
   0 -0.004950       101        32         9         0        27        15         6        12
   1  0.148148       108        48         8         0        24        21         2         5
   2 -0.062500       104        43         1         0        29        18         4         9
   3  0.128713       101        42         6         0        20        20         1        12
   4  0.083333       102        41         9         0        28        12         1        11
 
-blk     plays      none     stays      hits   doubles    splits
+tid     plays      none     stays      hits   doubles    splits
   0       146         0        78        59         8         1
   1       146         0        74        51        13         8
   2       154         0        75        68         7         4

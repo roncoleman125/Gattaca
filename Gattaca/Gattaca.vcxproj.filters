@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="Kpax.cu">
+      <Filter>K-PAX\CU</Filter>
+    </CudaCompile>
+    <CudaCompile Include="kernel.cu">
+      <Filter>K-PAX\CU</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="C21">
+      <UniqueIdentifier>{4def3670-ed13-423e-a94a-380e7c35688f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="C21\H">
+      <UniqueIdentifier>{c0c96a2d-8475-4fc2-9118-3e500355a2fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GA">
+      <UniqueIdentifier>{40468fcb-33ad-4363-8654-26c9eb8610a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GA\CPP">
+      <UniqueIdentifier>{f9ae562f-8a41-4a12-b08b-66182777f7f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GA\H">
+      <UniqueIdentifier>{8e4a0b13-7590-46af-808b-10cdb0cdf152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="K-PAX">
+      <UniqueIdentifier>{84847ee9-0dba-4de9-8e94-5fa5c4b82db8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="K-PAX\CPP">
+      <UniqueIdentifier>{173a2e67-6656-46f5-a43f-b2b00ce97bec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="K-PAX\H">
+      <UniqueIdentifier>{9251bef1-6f7e-4f9a-bdb5-d5ad404c80ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="K-PAX\CU">
+      <UniqueIdentifier>{7877168d-6647-4b6b-80a5-97d424112e35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnitTests">
+      <UniqueIdentifier>{43744321-c45c-4e30-962b-af052d82687e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>C21\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>C21\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Strategy.h">
+      <Filter>C21\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>C21\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>C21\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Hand.h">
+      <Filter>C21\H</Filter>
+    </ClInclude>
+    <ClInclude Include="GA.h">
+      <Filter>GA\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Population.h">
+      <Filter>GA\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Kpax.h">
+      <Filter>K-PAX\H</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers.h">
+      <Filter>K-PAX\H</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GA.cpp">
+      <Filter>GA\CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Population.cpp">
+      <Filter>GA\CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Helpers.cpp">
+      <Filter>K-PAX\CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="Test00.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="Test01.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+    <ClCompile Include="Test02.cpp">
+      <Filter>UnitTests</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

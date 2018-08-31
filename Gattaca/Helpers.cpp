@@ -25,35 +25,35 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "Strategy.h"
 #include "Game.h"
 
-void report(Strategy* strategies, Game* statistics, int numCores) {
+void report(Strategy* strategies, Game* statistics, int numThreads) {
 	printf("%3s %9s %9s %9s %9s %9s %9s %9s %9s %9s\n",
-		"blk", "pl", "hands", "wins", "blackjack", "charlies", "loses", "breaks", "dbjs", "pushes");
+		"tid", "pl", "hands", "wins", "blackjack", "charlies", "loses", "breaks", "dbjs", "pushes");
 
-	for (int blk = 0; blk < numCores; blk++) {
-		int n = sizeof(statistics[blk].count) / sizeof(int);
+	for (int threadIdx = 0; threadIdx < numThreads; threadIdx++) {
+		int n = sizeof(statistics[threadIdx].count) / sizeof(int);
 		int nohands = 0;
 		for (int index = 0; index < n; index++)
-			nohands += statistics[blk].count[index];
-		double mean = statistics[blk].pl / nohands;
+			nohands += statistics[threadIdx].count[index];
+		double mean = statistics[threadIdx].pl / nohands;
 
-		assert(nohands == statistics[blk].nohands);
+		assert(nohands == statistics[threadIdx].nohands);
 
 		printf("%3d %9.6f %9d %9d %9d %9d %9d %9d %9d %9d\n",
-			blk, mean, nohands,
-			statistics[blk].count[WINS],
-			statistics[blk].count[BLACKJACKS],
-			statistics[blk].count[CHARLIES],
-			statistics[blk].count[LOSSES],
-			statistics[blk].count[BUSTS],
-			statistics[blk].count[DEALER_BLACKJACKS],
-			statistics[blk].count[PUSHES]);
+			threadIdx, mean, nohands,
+			statistics[threadIdx].count[WINS],
+			statistics[threadIdx].count[BLACKJACKS],
+			statistics[threadIdx].count[CHARLIES],
+			statistics[threadIdx].count[LOSSES],
+			statistics[threadIdx].count[BUSTS],
+			statistics[threadIdx].count[DEALER_BLACKJACKS],
+			statistics[threadIdx].count[PUSHES]);
 
 	}
 
 	printf("\n");
 
-	printf("%3s %9s %9s %9s %9s %9s %9s\n", "blk", "plays", "none", "stays", "hits", "doubles", "splits");
-	for (int blk = 0; blk < numCores; blk++) {
+	printf("%3s %9s %9s %9s %9s %9s %9s\n", "tid", "plays", "none", "stays", "hits", "doubles", "splits");
+	for (int blk = 0; blk < numThreads; blk++) {
 		int numPlays =
 			strategies[blk].visits[NO_PLAY] +
 			strategies[blk].visits[STAY] +

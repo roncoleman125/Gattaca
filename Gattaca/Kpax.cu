@@ -815,7 +815,7 @@ __global__ void run(unsigned int* numGames, Strategy* strategies, Game* statisti
 		check(cudaStatus, "failed to malloc random states!");
 
 		// Invoke the GPU to initialize all of the random states
-		init << <numStrategies, 1 >> > (0, dev_states);
+		init <<< 1, numStrategies >>> (0, dev_states);
 		cudaStatus = cudaDeviceSynchronize();
 		check(cudaStatus, "failed to initialize random states!");
 
