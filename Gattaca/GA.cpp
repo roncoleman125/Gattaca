@@ -3,28 +3,31 @@
 #include "Population.h"
 #include "Helpers.h"
 
-Strategy cross(Strategy* a, Strategy* b) {
-	Strategy c = Strategy_();
+Strategy cross(Strategy* parent1, Strategy* parent2) {
+	// Initialize the child with "NO PLAY" rules.
+	Strategy child = Strategy_();
 
+	// Randomly alternate genes from parent 1 and parent 2. 
 	for (int index = 0; index < NUMBER_RULES; index++) {
 		int lottery = random(0, 1);
 
 		if (lottery == 0)
-			c.rules[index] = a->rules[index];
+			child.rules[index] = parent1->rules[index];
 		else
-			c.rules[index] = b->rules[index];
+			child.rules[index] = parent2->rules[index];
 	}
 
-	return c;
+	return child;
 }
 
 void mutate(Strategy* individual) {
+	// We'll draw from this array randomly
 	Play plays[] = { STAY, HIT, DOUBLE_DOWN, SPLIT };
 
 	int numPlays = sizeof(plays) / sizeof(int);
 
+	// Randomly mutate the play if probability is below mutation rate
 	for (int index = 0; index < NUMBER_RULES; index++) {
-
 		float lottery = random();
 
 		if (lottery > MUTATION_RATE)
@@ -39,14 +42,19 @@ void mutate(Strategy* individual) {
 }
 
 Strategy* tournamentSelect(Population* population) {
+	// This array holds pointers to strategies from the population
 	Strategy* tournament[TOURNAMENT_SIZE];
 
+	// Select at random n individuals to be in the tournament
 	for (int index = 0; index < TOURNAMENT_SIZE; index++) {
-		int lottery = random(0, POPULATION_SIZE);
+		// Get the individual index as a lottery
+		int lottery = random(0, POPULATION_SIZE-1);
 
+		// Indclude a pointer to this individual in the tournament.
 		tournament[index] = &population->individuals[lottery];
 	}
 
+	// Play the tournament
 	Strategy* winner = getFittest(tournament);
 
 	return winner;
@@ -74,18 +82,24 @@ Strategy* getFittest(Population* population) {
 }
 
 Population evolve(Population* oldPopulation) {
+	// Initialize the new population -- all individuals have "NO PLAY" strategies.
 	Population newPopulation = Population_();
 
+	// If elitist, always include the fittest individual in the population.
 	if (ELITIST)
 		newPopulation.individuals[0] = *getFittest(oldPopulation);
 
+	// Run 2X population size tournaments to build the next generation.
 	for (int index = ELITIST ? 1 : 0; index < POPULATION_SIZE; index++) {
-		Strategy* mother = tournamentSelect(oldPopulation);
+		// Find two parents through a pair of tournaments
+		Strategy* parent1 = tournamentSelect(oldPopulation);
 
-		Strategy* father = tournamentSelect(oldPopulation);
+		Strategy* parent2 = tournamentSelect(oldPopulation);
 
-		Strategy child = cross(mother, father);
+		// Get a child from these parents
+		Strategy child = cross(parent1, parent2);
 
+		// Add this child to the new population
 		newPopulation.individuals[index] = child;
 	}
 

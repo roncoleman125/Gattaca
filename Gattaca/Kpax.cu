@@ -502,6 +502,10 @@ __device__ void playout(Hand* hand, Card* upcard) {
 
 		if (isBroke(hand) || isBlackjack(hand))
 			return;
+
+		if (hand->size >= MAX_HAND_CARDS)
+			return;
+
 		/*
 		if (isCharlie(hand))
 		return;
@@ -518,6 +522,9 @@ __device__ void playout(Hand* hand, Card* upcard) {
 		break;
 
 	case SPLIT:
+		if (hand->size != 2)
+			return;
+
 		split(hand, upcard);
 		break;
 	}
@@ -805,7 +812,10 @@ __global__ void run(unsigned int* numGames, Strategy* strategies, Game* statisti
 
 		size_t asize;
 		cudaStatus = cudaDeviceGetLimit(&asize, cudaLimitStackSize);
-		check(cudaStatus, "get stack limit failed!");
+		check(cudaStatus, "get stack limit test failed!");
+
+		if (asize != LIMIT_STACK_SIZE)
+			check(cudaErrorNotSupported, "test stack limit failed!");
 
 		// Random states per thread
 		curandState_t* dev_states;

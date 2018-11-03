@@ -63,3 +63,11 @@ Strategy* getFittest(Strategy** individuals);
   \return Fittest strategy pointer
 */
 Strategy* getFittest(Population* population);
+
+/*!
+  \brief Evolves a population using natural selection.
+  \todo Function needs to apply the mutate operation.
+  \param population Old population from prior generation
+  \return New population of next generation
+*/
+Population evolve(Population* population);
