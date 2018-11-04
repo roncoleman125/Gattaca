@@ -24,4 +24,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define LIMIT_STACK_SIZE (4*4096)
 
-int evaluate(int numStrategies, Strategy* strategies, int numGames, Game* statistics);
+/*!
+  \brief Evaluates a number of strategies with an equal number of threads for a number of games using exactly one GPU block.
+  \param numStrategies Number of strategies
+  \param strategies Strategies must be size as numStrategies
+  \param numGames Number of games to play for each strategy
+  \param statistics Result statistics for each strategy
+  \return OK if successful, not OK (e.g., the CUDA error) if not ok
+*/
+int evaluate(int numThreads, Strategy* strategies, int numGames, Game* statistics);
+
+/*!
+  \brief Evaluates a number of strategies with an equal number of threads for a number of games using a number of GPU blocks.
+  \param numBlocks Number of GPU blocks
+  \param numStrategies Number of strategies
+  \param strategies Strategies must be size as numStrategies
+  \param numGames Number of games to play for each strategy
+  \param statistics Result statistics for each strategy
+  \return OK if successful, not OK (e.g., the CUDA error) if not ok
+*/
+int evaluate(int numBlocks, int numThreads, Strategy* strategies, int numGames, Game* statistics);

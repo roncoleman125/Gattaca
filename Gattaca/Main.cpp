@@ -25,14 +25,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 void test00(void);
 void test01(void);
 void test02(void);
+void test03(void);
 
 int main(int argc, char** argv) {
 	void(*tests[])(void) = {
 		/*
 		test00,
 		test01,
+		test02,
 		*/
-		test02
+		test03
 	};
 
 	int n = sizeof(tests) / sizeof(void*);
