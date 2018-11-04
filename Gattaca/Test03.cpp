@@ -53,9 +53,10 @@ tid     plays      none     stays      hits   doubles    splits
 #include "Helpers.h"
 
 #define NUM_BLOCKS 2
-#define NUM_THREADS 5
+#define NUM_THREADS_PER_BLOCK 5
+#define NUM_THREADS_TOTAL (NUM_BLOCKS * NUM_THREADS_PER_BLOCK)
+#define NUM_STRATEGIES NUM_THREADS_TOTAL 
 #define NUM_GAMES 1000
-#define NUM_STRATEGIES (NUM_BLOCKS * NUM_THREADS)
 
 void test03(void) {
 	Strategy strategies[NUM_STRATEGIES];
