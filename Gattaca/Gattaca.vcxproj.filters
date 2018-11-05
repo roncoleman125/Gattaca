@@ -36,7 +36,7 @@
     <Filter Include="K-PAX\CU">
       <UniqueIdentifier>{7877168d-6647-4b6b-80a5-97d424112e35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UnitTests">
+    <Filter Include="Unit Tests">
       <UniqueIdentifier>{43744321-c45c-4e30-962b-af052d82687e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -83,19 +83,19 @@
       <Filter>K-PAX\CPP</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>UnitTests</Filter>
+      <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="Test00.cpp">
-      <Filter>UnitTests</Filter>
+      <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="Test01.cpp">
-      <Filter>UnitTests</Filter>
+      <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="Test02.cpp">
-      <Filter>UnitTests</Filter>
+      <Filter>Unit Tests</Filter>
     </ClCompile>
     <ClCompile Include="Test03.cpp">
-      <Filter>UnitTests</Filter>
+      <Filter>Unit Tests</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
