@@ -52,7 +52,7 @@ void report(Strategy* strategies, Game* statistics, int numThreads) {
 
 	printf("\n");
 
-	printf("%3s %9s %9s %9s %9s %9s %9s\n", "tid", "plays", "none", "stays", "hits", "doubles", "splits");
+	printf("%3s %9s %9s %9s %9s %9s %9s\n", "tid", "total", "nones", "stays", "hits", "doubles", "splits");
 	for (int blk = 0; blk < numThreads; blk++) {
 		int numPlays =
 			strategies[blk].visits[NO_PLAY] +

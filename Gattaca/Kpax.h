@@ -23,6 +23,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #pragma once
 
 #define LIMIT_STACK_SIZE (4*4096)
+#define SEED_CURAND 0
 
 /*!
   \brief Evaluates a number of strategies with an equal number of threads for a number of games using exactly one GPU block.
