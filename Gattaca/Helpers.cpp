@@ -27,7 +27,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 void report(Strategy* strategies, Game* statistics, int numThreads) {
 	printf("%3s %9s %9s %9s %9s %9s %9s %9s %9s %9s\n",
-		"tid", "pl", "hands", "wins", "blackjack", "charlies", "loses", "breaks", "dbjs", "pushes");
+		"tid", "pl", "hands", "wins", "bjs", "charlies", "loses", "breaks", "dbjs", "pushes");
 
 	for (int threadIdx = 0; threadIdx < numThreads; threadIdx++) {
 		int n = sizeof(statistics[threadIdx].count) / sizeof(int);
