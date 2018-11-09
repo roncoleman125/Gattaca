@@ -21,7 +21,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /*
-tid        pl     hands      wins blackjack  charlies     loses    breaks      dbjs    pushes
+tid        pl     hands      wins       bjs  charlies     loses    breaks      dbjs    pushes
 0    0.035437      1030       408        49         0       285       156        34        98
 1   -0.006737      1039       400        50         0       279       177        45        88
 2    0.014947      1037       424        47         0       287       174        32        73
