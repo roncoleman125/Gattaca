@@ -533,7 +533,7 @@ __device__ void playout(Hand* hand, Card* upcard) {
 }
 
 __device__ void split(Hand* hand1, Card* upcard) {
-	// If there's a split overflow, fallback to non-split
+	// If there's a split overflow, fallback to non-split option
 	Player* player = (Player*)hand1->player;
 
 	if (player->size >= MAX_YOUR_HANDS) {
