@@ -537,7 +537,7 @@ __device__ void split(Hand* hand1, Card* upcard) {
 	Player* player = (Player*)hand1->player;
 
 	if (player->size >= MAX_YOUR_HANDS) {
-		splitback(hand1, upcard);
+		overflowSplit(hand1, upcard);
 		return;
 	}
 
@@ -578,7 +578,7 @@ __device__ void split(Hand* hand1, Card* upcard) {
 	playout(hand2, upcard);
 }
 
-__device__ void splitback(Hand* hand, Card* upcard) {
+__device__ void overflowSplit(Hand* hand, Card* upcard) {
 	Player* player = (Player*)hand->player;
 
 	Strategy* strategy = player->strategy;
@@ -765,7 +765,7 @@ __device__ Game go(int ngames, Strategy* strategy, curandState_t* state) {
 	Game statistics = Game_();
 	
 	for (int gameno = 0; gameno < ngames; gameno++) {
-		play(strategy,&statistics, state);
+		play(strategy, &statistics, state);
 	}
 	
 	return statistics;

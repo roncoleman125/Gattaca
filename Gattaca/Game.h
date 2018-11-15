@@ -69,9 +69,11 @@ __device__ void split(Hand* hand, Card* upcard);
 __device__ Play getPlay(Hand* hand, Card* upcard);
 
 /*!
-  \brief Split backup where split not allowed.
+  \brief Handles splitting overflow.
+  \param hand Hand causing the overflow.
+  \param upcard Dealer's up-card
 */
-__device__ void splitback(Hand* hand, Card* upcard);
+__device__ void overflowSplit(Hand* hand, Card* upcard);
 
 /*!
   \brief Plays out player hand, recusively in case of split, if necessary.
