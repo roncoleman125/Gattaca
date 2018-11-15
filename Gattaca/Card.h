@@ -108,4 +108,9 @@ __device__ Card deal(curandState_t* state);
 __device__ Suit randomSuit(curandState_t* state);
 
 
+/*!
+\brief Randomly selects a rank.
+\param Random state pointer
+\return Rank
+*/
 __device__ Rank randomRank(curandState_t* state);
