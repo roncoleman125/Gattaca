@@ -39,6 +39,12 @@
     <Filter Include="Unit Tests">
       <UniqueIdentifier>{43744321-c45c-4e30-962b-af052d82687e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Unit Tests\GA">
+      <UniqueIdentifier>{467b2565-c875-420f-9de5-0115dda46855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Tests\K-PAX">
+      <UniqueIdentifier>{8a4f8229-57e2-437a-a423-83d47eeabbbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -85,17 +91,20 @@
     <ClCompile Include="Main.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
+    <ClCompile Include="Test10.cpp">
+      <Filter>Unit Tests\GA</Filter>
+    </ClCompile>
     <ClCompile Include="Test00.cpp">
-      <Filter>Unit Tests</Filter>
+      <Filter>Unit Tests\K-PAX</Filter>
     </ClCompile>
     <ClCompile Include="Test01.cpp">
-      <Filter>Unit Tests</Filter>
+      <Filter>Unit Tests\K-PAX</Filter>
     </ClCompile>
     <ClCompile Include="Test02.cpp">
-      <Filter>Unit Tests</Filter>
+      <Filter>Unit Tests\K-PAX</Filter>
     </ClCompile>
     <ClCompile Include="Test03.cpp">
-      <Filter>Unit Tests</Filter>
+      <Filter>Unit Tests\K-PAX</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
