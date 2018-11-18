@@ -60,7 +60,7 @@ typedef enum {
 #define X NO_PLAY
 
 /*!
-  \enum Lookaside
+  \typedef Lookaside
   \brief Jump lookaside table entry
 */
 typedef struct {

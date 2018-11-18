@@ -472,12 +472,12 @@ __device__ void play(Strategy* strategy, Game* statistics, curandState_t* state)
 
 	statistics->nohands += player.size;
 
-	int sum = 0;
-
-	int n = sizeof(statistics->count) / sizeof(int);
-
-	for (int index = 0; index < n; index++)
-		sum += statistics->count[index];
+//	int sum = 0;
+//
+//	int n = sizeof(statistics->count) / sizeof(int);
+//
+//	for (int index = 0; index < n; index++)
+//		sum += statistics->count[index];
 }
 
 __device__ void play(Player* player, Card* upcard) {

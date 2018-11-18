@@ -34,11 +34,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*!
 	\brief Tests the instantiation of two populations.
-	Just the two lines below causes the function to crash with a stack overflow.
+	The two lines below causes the function to crash with a stack overflow.
 	To fix it do: Right-click on Gattaca (the project) > Properties > Configuration Properties > Linker > System > Stack Reserve Size
-	and set this number to 2000000.  This figure works but it likely various by platform, depending on your hardware. 
+	and set this number to 2000000.  This figure works but it likely various by platform, depending on hardware. 
+	How big is Strategy? See https://www.embedded.fm/blog/2016/6/28/how-big-is-an-enum. 
 */
 void test10(void) {
 	Population p1 = Population_();
 	Population p2 = Population_();
+
+	printf("population size = %d\n", sizeof(p1));
 }
