@@ -34,8 +34,8 @@ int main(int argc, char** argv) {
 		test00,
 		test01,
 		test02,
-		test03
 		*/
+		test03,
 		test10
 	};
 
