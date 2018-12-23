@@ -103,6 +103,7 @@
     <ClCompile Include="Test01.cpp" />
     <ClCompile Include="Test02.cpp" />
     <ClCompile Include="Test03.cpp" />
+    <ClCompile Include="Test04.cpp" />
     <ClCompile Include="Test10.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

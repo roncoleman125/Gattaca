@@ -35,12 +35,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #define ACE_AS_11 10
 
+__device__ __shared__ curandState_t* states;
+
 __device__ int random(int min, int max, curandState_t* state) {
 
 	// See https://stackoverflow.com/questions/2509679/how-to-generate-a-random-integer-number-from-within-a-range/6852396
 	return (curand(state) % (max + 1 - min)) + min;
 }
-
 
 ///////////////// Card
 
@@ -68,7 +69,10 @@ __device__ Rank randomRank(curandState_t* state) {
 	return rank;
 }
 
-__device__ Card deal(curandState_t* state) {
+__device__ Card deal() {
+	int index = blockIdx.x * blockDim.x + threadIdx.x;
+	curandState_t* state = &states[index];
+
 	// Get a random suit
 	Suit suit = randomSuit(state);
 
@@ -95,26 +99,26 @@ __device__ bool is10(Card* card) {
 
 ////////// Hand
 
-__device__ Hand Hand_(curandState_t* state) {
+__device__ Hand Hand_() {
 	Hand hand = { {
 			Card_(NO_RANK, NO_SUIT),
 			Card_(NO_RANK, NO_SUIT),
 			Card_(NO_RANK, NO_SUIT),
 			Card_(NO_RANK, NO_SUIT),
 			Card_(NO_RANK, NO_SUIT) },
-			0, 0, 1.0, NULL, state };
+			0, 0, 1.0, NULL };
 
 	return hand;
 }
 
-__device__ Hand Hand_(void* player, curandState_t* state) {
+__device__ Hand Hand_(void* player) {
 	Hand hand = { {
 			Card_(NO_RANK, NO_SUIT),
 			Card_(NO_RANK, NO_SUIT),
 			Card_(NO_RANK, NO_SUIT),
 			Card_(NO_RANK, NO_SUIT),
 			Card_(NO_RANK, NO_SUIT) },
-			0, 0, 1.0, player, state };
+			0, 0, 1.0, player };
 
 	return hand;
 }
@@ -173,7 +177,7 @@ __device__ bool isBlackjack(void* player, Hand* hand) {
 }
 
 __device__ Card hit(Hand* hand) {
-	Card card = deal(hand->state);
+	Card card = deal();
 
 	hit(hand, &card);
 
@@ -415,9 +419,9 @@ __device__ Play doSection1(Hand* hand, Card* upcard, Strategy* strategy) {
 
 /////////////// Player
 
-__device__ Player Player_(Strategy* strategy, curandState_t* state) {
+__device__ Player Player_(Strategy* strategy) {
 	// TODO: the player's hand is not pointing back to the player
-	Player player = { { Hand_(state) }, 1, strategy, 0.0 };
+	Player player = { { Hand_() }, 1, strategy, 0.0 };
 
 	return player;
 }
@@ -443,12 +447,12 @@ __host__ Game Game_() {
 	return{ { 0, 0, 0, 0, 0, 0, 0 }, 0, 0.0 };
 }
 
-__device__ void play(Strategy* strategy, Game* statistics, curandState_t* state) {
+__device__ void play(Strategy* strategy, Game* statistics) {
 	// Create the heads-up game
-	Player player = Player_(strategy, state);
+	Player player = Player_(strategy);
 	init(&player);
 
-	Hand dealer = Hand_(state);
+	Hand dealer = Hand_();
 
 	// Deal the initial round
 	hit(&player);
@@ -549,7 +553,7 @@ __device__ void split(Hand* hand1, Card* upcard) {
 		playThrough = false;
 
 	// Make the new hand
-	Hand newHand = Hand_(player, hand1->state);
+	Hand newHand = Hand_(player);
 
 	// Get card from 1st hand
 	Card card = hand1->cards[1];
@@ -761,11 +765,11 @@ __device__ Play getPlay(Hand* hand, Card* upcard) {
 	*/
 }
 
-__device__ Game go(int ngames, Strategy* strategy, curandState_t* state) {
+__device__ Game go(int ngames, Strategy* strategy) {
 	Game statistics = Game_();
 	
 	for (int gameno = 0; gameno < ngames; gameno++) {
-		play(strategy, &statistics, state);
+		play(strategy, &statistics);
 	}
 	
 	return statistics;
@@ -775,7 +779,7 @@ __device__ Game go(int ngames, Strategy* strategy, curandState_t* state) {
 /////////////// See http://cs.umw.edu/~finlayson/class/fall16/cpsc425/notes/cuda-random.html
 
 /* this GPU kernel function is used to initialize the random states */
-__global__ void init(unsigned int seed, curandState_t* states) {
+__global__ void init(unsigned int seed, curandState_t* states_) {
 	// Calculate the thread's index
 	int index = blockIdx.x * blockDim.x + threadIdx.x;
 
@@ -784,16 +788,18 @@ __global__ void init(unsigned int seed, curandState_t* states) {
 		index,        // the sequence number should be different for each thread (unless you want all
 					  // thread to get the same sequence of numbers for some reason - use thread id!
 		0,            // the offset is how much extra we advance in the sequence for each call, can be 0
-		&states[index]);
+		&states_[index]);
+
+	states = states_;
 }
 
-/* this GPU kernel takes an array of states, and an array of ints, and puts a random int into each */
-__global__ void run(unsigned int numGames, Strategy* strategies, Game* statistics, curandState_t* states) {
-	// Calculate the thread's index
+/* this GPU kernel takes plays n games given pointer to the strategies and pointer return statistics. */
+__global__ void run(unsigned int numGames, Strategy* strategies, Game* statistics) {
+	// Calculate the thread's unique index
 	int index = blockIdx.x * blockDim.x + threadIdx.x;
 
 	// Play the games
-	statistics[index] = go(numGames, &strategies[index], &states[index]);
+	statistics[index] = go(numGames, &strategies[index]);
 }
 
 /////////////// GPU driver
@@ -838,16 +844,6 @@ int evaluate(int numThreads, Strategy* strategies, int numGames, Game* statistic
 		cudaStatus = cudaDeviceSynchronize();
 		check(cudaStatus, "failed to initialize random states on device!");
 
-//		// Allocate space on the GPU for the number of games to play
-//		unsigned int* dev_games;
-//
-//		cudaStatus = cudaMalloc((void**)&dev_games, sizeof(unsigned int));
-//		check(cudaStatus, "failed to malloc number of games on device!");
-//
-//		// Copy to the GPU the number of games
-//		cudaMemcpy(dev_games, &numGames, sizeof(unsigned int), cudaMemcpyHostToDevice);
-//		check(cudaStatus, "failed to copy number of games to device!");
-
 		// Create the strategies
 		Strategy* dev_strategies = 0;
 
@@ -869,7 +865,7 @@ int evaluate(int numThreads, Strategy* strategies, int numGames, Game* statistic
 		// There is no need to copy the statistics to the GPU since they are generated by the GPU
 
 		// Finally invoke the kernel to run the games */
-		run <<<numBlocks, numThreads >>> (numGames, dev_strategies, dev_statistics, dev_states);
+		run <<<numBlocks, numThreads >>> (numGames, dev_strategies, dev_statistics);
 
 		// Check for any errors launching the kernel
 		cudaStatus = cudaGetLastError();

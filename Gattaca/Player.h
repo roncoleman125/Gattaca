@@ -45,7 +45,7 @@ typedef struct {
   \param state Random state pointer
   \return A player instance
 */
-__device__ Player Player_(Strategy* strategy, curandState_t* state);
+__device__ Player Player_(Strategy* strategy);
 
 /*! 
   \brief Initializes a player.

@@ -39,7 +39,6 @@ typedef struct {
 	int size;                    /**< Number of cards in hand not to exceed MAX_HAND_CARDS */
 	float bet;                   /**< Bet amount for this hand */
 	void* player;                /**< Back pointer to player of this hand */
-	curandState_t* state;        /**< Random state pointer */
 } Hand;
 
 /*!
@@ -49,7 +48,7 @@ typedef struct {
   This constructor does not initialize the player back pointer nor
   add any cards.
 */
-__device__ Hand Hand_(curandState_t* state);
+__device__ Hand Hand_();
 
 /*!
   \brief Constructor of empty hand
@@ -58,7 +57,7 @@ __device__ Hand Hand_(curandState_t* state);
   \return A hand instance
   This constructor initializes the player back point but does not add any cards. 
 */
-__device__ Hand Hand_(void* player, curandState_t* state);
+__device__ Hand Hand_(void* player);
 
 /*!
   \brief Scores hand according to its value.

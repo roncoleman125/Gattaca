@@ -26,6 +26,7 @@ void test00(void);
 void test01(void);
 void test02(void);
 void test03(void);
+void test04(void);
 void test10(void);
 
 int main(int argc, char** argv) {
@@ -34,9 +35,9 @@ int main(int argc, char** argv) {
 		test00,
 		test01,
 		test02,
-		*/
 		test03,
-		test10
+		test10*/
+		test04
 	};
 
 	int n = sizeof(tests) / sizeof(void*);
